@@ -9,4 +9,4 @@ uvicorn[standard]
 python-dotenv
 
 # Ensure aiohttp supports Python 3.12
-aiohttp==3.9.0b0
+aiohttp==3.11.6
