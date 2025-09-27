@@ -1,7 +1,14 @@
-from fastapi import FastAPI
+import asyncio
+import uvicorn
+from backend.main import app
+from bot.bot import start_bot
 
-app = FastAPI()
+async def start():
+    bot_task = asyncio.create_task(start_bot())
+    api_task = asyncio.create_task(
+        uvicorn.run(app, host="0.0.0.0", port=8000)
+    )
+    await asyncio.gather(bot_task, api_task)
 
-@app.get("/")
-def health_check():
-    return {"status": "ok", "message": "FastAPI server is running 🚀"}
+if __name__ == "__main__":
+    asyncio.run(start())
