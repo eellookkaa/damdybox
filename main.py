@@ -1,14 +1,15 @@
-from fastapi import FastAPI
+import asyncio
+import uvicorn
+from backend.main import app
+from bot.bot import start_bot
 
-app = FastAPI()
+async def start():
+    bot_task = asyncio.create_task(start_bot())
+    api_task = asyncio.create_task(
+        uvicorn.run(app, host="0.0.0.0", port=8000)
+    )
+    await asyncio.gather(bot_task, api_task)
 
-@app.get("/api/shops")
-def get_shops():
-    return [
-        {"id": 1, "name": "Bakery House", "discount": 40, "closing": "20:00"},
-        {"id": 2, "name": "Cafe Smile", "discount": 50, "closing": "21:00"}
-    ]
+if __name__ == "__main__":
+    asyncio.run(start())
 
-@app.get("/api/cart")
-def get_cart():
-    return {"items": [], "total": 0}
