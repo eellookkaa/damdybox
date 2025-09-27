@@ -1,4 +1,12 @@
+# Telegram bot
 aiogram==3.10.0
-python-dotenv
+
+# Web backend
 fastapi
-uvicorn
+uvicorn[standard]
+
+# Env support
+python-dotenv
+
+# Ensure aiohttp supports Python 3.12
+aiohttp>=3.9.5
